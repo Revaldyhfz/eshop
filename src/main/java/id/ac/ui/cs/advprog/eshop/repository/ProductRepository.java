@@ -32,4 +32,15 @@ public class ProductRepository {
         }
         return null; // If product not found
     }
+
+    public void update(Product product) {
+        for (int i = 0; i < productData.size(); i++) {
+            if (productData.get(i).getProductId().equals(product.getProductId())) {
+                productData.set(i, product); // Update existing product
+                break;
+            }
+        }
+    }
+
+
 }
