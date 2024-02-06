@@ -39,4 +39,13 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(String id) {
         return productRepository.findById(id);
     }
+
+    @Override
+    public void update(Product product) {
+        if (product != null) {
+            productRepository.update(product);
+        }
+    }
+
+
 }
