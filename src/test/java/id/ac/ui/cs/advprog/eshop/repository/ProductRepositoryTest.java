@@ -68,9 +68,9 @@ class ProductRepositoryTest {
     @Test
     void testDelete() {
         Product product1 = new Product();
-        product1.setProductId("3b0a3b55-fb18-4e2b-b4b3-f789c3f52d22");
-        product1.setProductName("Sabun Cuci Joni");
-        product1.setProductQuantity(1);
+        product1.setProductId("8a94bde4-aa11-41b6-92a0-42c08c8be2e0");
+        product1.setProductName("Soap Bar Lavender");
+        product1.setProductQuantity(60);
         productRepository.create(product1);
 
         productRepository.delete(product1);
@@ -82,14 +82,14 @@ class ProductRepositoryTest {
     @Test
     void testDeleteIfMoreThanOneProduct() {
         Product product1 = new Product(), product2 = new Product();
-        product1.setProductId("0e4000be-56dc-4f75-854e-5063273ab2dc");
-        product1.setProductName("Teh Wuling Pejuang");
-        product1.setProductQuantity(5);
+        product1.setProductId("d9a504f2-d86b-45b0-8902-4e16e295c4ef");
+        product1.setProductName("Toothpaste Mint Fresh");
+        product1.setProductQuantity(20);
         productRepository.create(product1);
 
-        product2.setProductId("d009dbb5-2e14-4a0c-94d6-eb4a9eebb0f7");
-        product2.setProductName("CRV Depok ZJC");
-        product2.setProductQuantity(2);
+        product2.setProductId("aab87b6c-b687-4d5e-9209-287ff392c44d");
+        product2.setProductName("Shower Gel Ocean Breeze");
+        product2.setProductQuantity(10);
         productRepository.create(product2);
 
         productRepository.delete(product1);
@@ -102,9 +102,9 @@ class ProductRepositoryTest {
     @Test
     void testDeleteNonExistingProduct() {
         Product product = new Product();
-        product.setProductId("3b0a3b55-fb18-4e2b-b4b3-f789c3f52d22");
-        product.setProductName("Sabun Cuci Joni");
-        product.setProductQuantity(1);
+        product.setProductId("cfde63f4-868a-452f-a7bb-6dc0c084a60a");
+        product.setProductName("Soap Bar Lavender");
+        product.setProductQuantity(60);
         productRepository.create(product);
 
         Product dummyProduct = new Product();
@@ -122,13 +122,13 @@ class ProductRepositoryTest {
     @Test
     void testUpdate() {
         Product product1 = new Product();
-        product1.setProductId("0e4000be-56dc-4f75-854e-5063273ab2dc");
-        product1.setProductName("Teh Wuling Pejuang");
-        product1.setProductQuantity(5);
+        product1.setProductId("28bf3c70-2d33-44a8-b5b5-1ff5ae8ec7fc");
+        product1.setProductName("Toothpaste Mint Fresh");
+        product1.setProductQuantity(20);
         productRepository.create(product1);
 
-        String updatedName = "Updated Name";
-        int updatedQuantity = 10;
+        String updatedName = "Updated Toothpaste";
+        int updatedQuantity = 50;
         product1.setProductName(updatedName);
         product1.setProductQuantity(updatedQuantity);
         productRepository.update(product1);
@@ -138,4 +138,31 @@ class ProductRepositoryTest {
         assertEquals(updatedName, updatedProduct.getProductName());
         assertEquals(updatedQuantity, updatedProduct.getProductQuantity());
     }
+
+    @Test
+    void testUpdateNonExistingProduct() {
+        // Create a product
+        Product product = new Product();
+        product.setProductId("28bf3c70-2d33-44a8-b5b5-1ff5ae8ec7fc");
+        product.setProductName("Toothpaste Mint Fresh");
+        product.setProductQuantity(30);
+        productRepository.create(product);
+
+        // Attempt to update a non-existing product
+        String nonExistingId = "nonExistingId";
+        String updatedName = "Updated Name";
+        int updatedQuantity = 40;
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId(nonExistingId);
+        updatedProduct.setProductName(updatedName);
+        updatedProduct.setProductQuantity(updatedQuantity);
+        productRepository.update(updatedProduct);
+
+        // Check if the product is not updated
+        Iterator<Product> productIterator = productRepository.findAll();
+        Product curProduct = productIterator.next();
+        assertNotEquals(updatedName, curProduct.getProductName());
+        assertNotEquals(updatedQuantity, curProduct.getProductQuantity());
+    }
 }
+
