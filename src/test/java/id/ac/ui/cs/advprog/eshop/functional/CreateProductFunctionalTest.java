@@ -58,5 +58,5 @@ public class CreateProductFunctionalTest {
         assertTrue(productListTable.getText().contains("New Product Name"));
     }
 
-    // Optionally, you can add more test cases here to further cover various scenarios
+
 }
