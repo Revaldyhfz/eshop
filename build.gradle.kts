@@ -3,6 +3,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.2.2"
 	id("io.spring.dependency-management") version "1.1.4"
+	id("org.sonarqube") version "4.4.1.3373"
 
 }
 
@@ -23,6 +24,13 @@ repositories {
 	mavenCentral()
 }
 
+sonar {
+	properties {
+		property("sonar.projectKey", "Revaldyhfz_eshop")
+		property("sonar.organization", "revaldyhfz")
+		property("sonar.host.url", "https://sonarcloud.io")
+	}
+}
 val seleniumJavaVersion = "4.14.1"
 val seleniumJupiterVersion = "5.0.1"
 val webdrivermanagerVersion = "5.6.3"
