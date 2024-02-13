@@ -29,29 +29,31 @@ The project follows the MVC (Model-View-Controller) architecture:
 - `src/main/resources`: Contains application properties and HTML templates
 - `src/test/java`: Contains unit and functional tests
 
-## Reflection 1.1
+## Reflection 1
 
-### Clean Code Principles Applied
+### Reflection 1.1
+
+#### Clean Code Principles Applied
 
 1. **Descriptive Naming**: Variables, methods, and classes are named descriptively.
 2. **Single Responsibility Principle (SRP)**: Each class and method has one clear task.
 3. **Code Formatting**: Consistent indentation, spacing, and style are maintained.
 4. **Comments**: Code is well-documented with comments to explain complex logic or provide context.
 
-### Secure Coding Practices
+#### Secure Coding Practices
 
 1. **Input Validation**: User inputs are validated on the server-side.
 2. **Secure Communication**: HTTPS protocol is used to encrypt data transmitted.
 3. **Session Management**: Secure session management practices are implemented.
 4. **Password Hashing**: User passwords are securely hashed and salted.
 
-## Improvements
+#### Improvements
 
 - Increase test coverage.
 - Implement role-based access control.
 - Implement logging.
 
-## Reflection 1.2
+### Reflection 1.2
 
 After writing the unit test, I feel more confident about the reliability of the core functionalities of the application. However, determining the exact number of unit tests to be written in a class can vary depending on factors such as the complexity of the class and the number of methods it contains. Generally, each method and edge case should have its own corresponding unit test to ensure comprehensive coverage.
 
