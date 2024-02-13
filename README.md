@@ -27,29 +27,29 @@ The project follows the MVC (Model-View-Controller) architecture:
 - `src/main/resources`: Contains application properties and HTML templates
 - `src/test/java`: Contains unit and functional tests
 
-## Reflection 1
-## Clean Code Principles Applied
+## Reflection 1.1
 
-1. **Descriptive Naming**: Variables, methods, and classes are named in a descriptive manner, making the code easier to understand.
-2. **Single Responsibility Principle (SRP)**: Each class and method is responsible for one clear task, promoting modularity and maintainability.
-3. **Code Formatting**: Consistent indentation, spacing, and code style are maintained throughout the project for readability.
-4. **Comments**: Code is well-documented with comments to explain complex logic or provide context where necessary.
+### Clean Code Principles Applied
 
-## Secure Coding Practices
+1. **Descriptive Naming**: Variables, methods, and classes are named descriptively.
+2. **Single Responsibility Principle (SRP)**: Each class and method has one clear task.
+3. **Code Formatting**: Consistent indentation, spacing, and style are maintained.
+4. **Comments**: Code is well-documented with comments to explain complex logic or provide context.
 
-1. **Input Validation**: User inputs are validated on the server-side to prevent injection attacks and ensure data integrity.
-2. **Secure Communication**: HTTPS protocol is used to encrypt data transmitted between the client and server, ensuring confidentiality.
-3. **Session Management**: Secure session management practices are implemented to prevent session hijacking and ensure user authentication and authorization.
-4. **Password Hashing**: User passwords are securely hashed and salted before storage to protect against data breaches and unauthorized access.
+### Secure Coding Practices
+
+1. **Input Validation**: User inputs are validated on the server-side.
+2. **Secure Communication**: HTTPS protocol is used to encrypt data transmitted.
+3. **Session Management**: Secure session management practices are implemented.
+4. **Password Hashing**: User passwords are securely hashed and salted.
 
 ## Improvements
 
-- Increase test coverage: Write more unit and functional tests to cover edge cases and improve code reliability.
-- Implement role-based access control: Restrict access to certain features based on user roles to enhance security.
-- Implement logging: Add logging functionality to track system events and aid in debugging and auditing.
+- Increase test coverage.
+- Implement role-based access control.
+- Implement logging.
 
-
-## Reflection 2
+## Reflection 1.2
 
 After writing the unit test, I feel more confident about the reliability of the core functionalities of the application. However, determining the exact number of unit tests to be written in a class can vary depending on factors such as the complexity of the class and the number of methods it contains. Generally, each method and edge case should have its own corresponding unit test to ensure comprehensive coverage.
 
@@ -57,23 +57,16 @@ While achieving 100% code coverage is desirable, it does not guarantee the absen
 
 Regarding the new functional test suite created to verify the number of items in the product list, the cleanliness of the code may be affected if it follows a similar structure to the previous test suites. Repeating setup procedures and instance variables in each test suite can lead to code duplication and reduced maintainability.
 
-Potential clean code issues in the new functional test suite:
+## Reflection 2
 
-1. **Code Duplication**: Repeating setup procedures and instance variables in each test suite can lead to code duplication.
-2. **Low Cohesion**: Each test suite should focus on testing a specific feature or functionality, but if setup procedures are duplicated, it can reduce cohesion.
-3. **High Coupling**: Dependency on specific instance variables and setup procedures can increase coupling between test cases and reduce flexibility.
+### Reflection 2.1
 
-Possible improvements to make the code cleaner:
+During the exercise, I encountered several code quality issues that required attention. One issue was incomplete test coverage, particularly in the repository and controller classes. To address this, I developed additional test cases to cover untested functionalities, ensuring comprehensive code coverage. Another issue was an untested section of code, which initially seemed like a simple closing curly bracket. However, upon closer inspection, I realized the need for a specific test case to handle scenarios where the product ID is not found, improving the robustness of the application.
 
-1. **Test Setup Method**: Create a separate setup method or class to handle common setup procedures and instance variables shared across test suites.
-2. **Parameterized Tests**: Consider using parameterized tests to test different scenarios with varying input values, reducing the need for separate test cases for each scenario.
-3. **Test Data Generation**: Use test data generation techniques to create test objects dynamically, reducing dependency on hardcoded values and improving test flexibility.
+### Reflection 2.2
 
-By addressing these clean code issues and making the necessary improvements, the new functional test suite can maintain code quality and readability while ensuring comprehensive test coverage.
-
+The implemented CI/CD workflows in GitHub/GitLab have effectively met the definition of Continuous Integration and Continuous Deployment. They automate test execution and deployment processes, facilitating early bug detection, rapid delivery of updates, and seamless collaboration among team members.
 
 ## Contributors
 
 - [Revady Hafizhy Mukhtar](https://github.com/Revaldyhfz)
-
-
