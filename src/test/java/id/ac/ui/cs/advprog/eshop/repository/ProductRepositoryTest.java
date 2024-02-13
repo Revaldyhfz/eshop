@@ -164,5 +164,44 @@ class ProductRepositoryTest {
         assertNotEquals(updatedName, curProduct.getProductName());
         assertNotEquals(updatedQuantity, curProduct.getProductQuantity());
     }
+
+    @Test
+    void testFindByIdProductFound() {
+        // Create a product and add it to the repository
+        Product product = new Product();
+        product.setProductId("existingId");
+        productRepository.create(product);
+
+        // Attempt to find the product by its ID
+        Product foundProduct = productRepository.findById("existingId");
+
+        // Assert that the found product matches the one we added
+        assertNotNull(foundProduct);
+        assertEquals("existingId", foundProduct.getProductId());
+        // Add more assertions as needed to verify other properties of the product
+    }
+
+    @Test
+    void testFindByIdProductNotFoundInEmptyRepository() {
+        // Ensure the repository is empty
+        productRepository = new ProductRepository();
+
+        assertNull(productRepository.findById("nonExistingId"));
+    }
+
+    @Test
+    void testFindByIdProductNotFound() {
+        // Create a product and add it to the repository
+        Product product = new Product();
+        product.setProductId("existingId");
+        productRepository.create(product);
+
+        // Attempt to find a non-existing product by its ID
+        Product foundProduct = productRepository.findById("nonExistingId");
+
+        // Assert that the found product is null
+        assertNull(foundProduct);
+    }
+
 }
 
