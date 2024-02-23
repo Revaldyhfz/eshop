@@ -71,6 +71,63 @@ During the exercise, I encountered several code quality issues that required att
 
 The implemented CI/CD workflows in GitHub/GitLab have effectively met the definition of Continuous Integration and Continuous Deployment. They automate test execution and deployment processes, facilitating early bug detection, rapid delivery of updates, and seamless collaboration among team members.
 
+## Reflection 3
+
+### Reflection 3.1
+
+### Project Principles and SOLID Principles Application
+
+- **Open/Closed Principle (OCP)**:
+    - Implemented in the `ProductService.create` method to check if the `productId` is null and generate a random UUID if necessary.
+      ```java
+      public Product create(Product product) {
+          if (product.getProductId() == null) {
+              UUID uuid = UUID.randomUUID();
+              product.setProductId(uuid.toString());
+          }
+          productData.add(product);
+          return product;
+      }
+      ```
+
+- **Liskov Substitution Principle (LSP)**:
+    - Demonstrated by separating the `CarController` and `ProductController` classes to remove dependencies on the `Car` class hierarchy, improving flexibility and maintainability.
+
+- **Dependency Inversion Principle (DIP)**:
+    - Introduced interfaces (`CarRepositoryInterface` and `ProductRepositoryInterface`) to decouple the repository classes from the service classes, enhancing testability and flexibility.
+      ```java
+      // Example of CarRepositoryInterface
+      public interface CarRepositoryInterface {
+          Car create(Car car);
+          Iterator<Car> findAll();
+          Car findById(String id);
+          Car update(String id, Car updatedCar);
+          void delete(String id);
+      }
+      ```
+
+## Advantages of Applying SOLID Principles
+
+- **OCP**:
+    - Increases code flexibility and extensibility. For example, adding new product creation rules or behaviors can be done without modifying existing code.
+
+- **LSP**:
+    - Enhances code maintainability and readability. For instance, separating the controllers improves code organization and makes it easier to understand and modify.
+
+- **DIP**:
+    - Improves code maintainability and testability. By depending on abstractions rather than concrete implementations, the code becomes easier to test and change.
+
+## Disadvantages of Not Applying SOLID Principles
+
+- **OCP**:
+    - Without OCP, modifying existing code to accommodate new requirements can lead to code fragility and increased risk of introducing bugs.
+
+- **LSP**:
+    - Violating LSP can result in code that is difficult to understand and maintain, as it may not adhere to expected behaviors and interfaces.
+
+- **DIP**:
+    - Lack of DIP can lead to tightly coupled code, making it challenging to test and change individual components without affecting other parts of the system.
+
 ## Contributors
 
 - [Revady Hafizhy Mukhtar](https://github.com/Revaldyhfz)
