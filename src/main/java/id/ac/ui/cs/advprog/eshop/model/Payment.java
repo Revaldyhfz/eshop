@@ -21,7 +21,7 @@ public class Payment {
     public Payment(String id, String method, String status, Map<String, String> paymentData) {
         this.id = id;
         this.method = method;
-        this.status = status;
+        setStatus(status); // Set status using the setter to ensure validation
         this.paymentData = paymentData;
     }
 
@@ -47,9 +47,7 @@ public class Payment {
     }
 
     public void setStatus(String status) {
-        if (!status.equals("CHECK_PAYMENT") && !status.equals("SUCCESS") && !status.equals("REJECTED")) {
-            throw new IllegalArgumentException("Invalid status");
-        }
+        validateStatus(status); // Validate status before setting
         this.status = status;
     }
 
@@ -72,6 +70,13 @@ public class Payment {
     public void removePaymentData(String key) {
         if (paymentData != null) {
             paymentData.remove(key);
+        }
+    }
+
+    // Private method to validate status
+    private void validateStatus(String status) {
+        if (!status.equals("CHECK_PAYMENT") && !status.equals("SUCCESS") && !status.equals("REJECTED")) {
+            throw new IllegalArgumentException("Invalid status");
         }
     }
 }
