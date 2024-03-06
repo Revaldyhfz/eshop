@@ -8,30 +8,23 @@ import java.util.List;
 import java.util.Map;
 
 public class PaymentRepository {
-    private List<Payment> paymentList = new ArrayList<>();
+    private Map<String, Payment> paymentMap = new HashMap<>();
 
     public Payment save(Payment payment) {
-        Payment existingPayment = findById(payment.getId());
-        if (existingPayment == null) {
-            paymentList.add(payment);
-            return payment;
+        if (paymentMap.containsKey(payment.getId())) {
+            paymentMap.put(payment.getId(), payment);
         } else {
-            int index = paymentList.indexOf(existingPayment);
-            paymentList.set(index, payment);
-            return payment;
+            Payment newPayment = new Payment(payment.getId(), payment.getMethod(), payment.getStatus(), new HashMap<>(payment.getPaymentData()));
+            paymentMap.put(payment.getId(), newPayment);
         }
+        return payment;
     }
 
     public Payment findById(String id) {
-        for (Payment payment : paymentList) {
-            if (payment.getId().equals(id)) {
-                return payment;
-            }
-        }
-        return null;
+        return paymentMap.get(id);
     }
 
     public List<Payment> findAll() {
-        return new ArrayList<>(paymentList);
+        return new ArrayList<>(paymentMap.values());
     }
 }
