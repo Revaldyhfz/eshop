@@ -10,8 +10,14 @@ import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+ // is autowired important?
     @Autowired
+
+    // create a new instance of OrderRepository
     private OrderRepository orderRepository;
+
+
 
     @Override
     public Order createOrder(Order order) {
