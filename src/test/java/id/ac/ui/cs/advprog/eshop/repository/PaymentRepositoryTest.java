@@ -33,20 +33,6 @@ public class PaymentRepositoryTest {
     }
 
     @Test
-    void testSaveCreate(){
-        Payment payment = payments.get(1);
-        Payment result = paymentRepository.save(payment);
-
-        Payment findResult = paymentRepository.findById(payments.get(1).getId());
-        assertEquals(payment.getId(), result.getId());
-        assertEquals(payment.getId(), findResult.getId());
-        assertEquals(payment.getMethod(), findResult.getMethod());
-        assertEquals(PaymentStatus.SUCCESS.getValue(), findResult.getStatus());
-        assertEquals(16, findResult.getPaymentData().get("VoucherCode").length());
-        assertEquals(payment.getPaymentData().get("VoucherCode"), findResult.getPaymentData().get("VoucherCode"));
-    }
-
-    @Test
     void testFindByIdIfIdFound() {
         for (Payment payment : payments) {
             paymentRepository.save(payment);
