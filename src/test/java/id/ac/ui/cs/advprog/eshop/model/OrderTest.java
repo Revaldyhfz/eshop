@@ -3,7 +3,6 @@ package id.ac.ui.cs.advprog.eshop.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 
 import java.util.List;
 import java.util.ArrayList;
