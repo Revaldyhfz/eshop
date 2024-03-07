@@ -8,43 +8,55 @@ import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Component
 public class PaymentServiceImpl implements PaymentService {
 
-
+    @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
     private OrderRepository orderRepository;
+
+    // Constructor
+    public PaymentServiceImpl(PaymentRepository paymentRepository, OrderRepository orderRepository) {
+        this.paymentRepository = paymentRepository;
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        // Implement logic to create and save a new payment based on the provided order
-        // and return the created payment
-        return null;
+        Payment payment = new Payment(order.getId(), method, paymentData);
+        paymentRepository.save(payment);
+        return payment;
     }
 
     @Override
     public Payment setStatus(Payment payment, String status) {
-        // Implement logic to set the status of the provided payment
-        // and update the related order status if necessary
-        return null;
+        payment.setStatus(status);
+        if (status.equals(PaymentStatus.SUCCESS.getValue())) {
+            Order order = orderRepository.findById(payment.getId());
+            order.setStatus(OrderStatus.SUCCESS.getValue());
+            orderRepository.save(order);
+        } else if (status.equals(PaymentStatus.REJECTED.getValue())) {
+            Order order = orderRepository.findById(payment.getId());
+            order.setStatus(OrderStatus.FAILED.getValue());
+            orderRepository.save(order);
+        }
+        return paymentRepository.save(payment);
     }
 
     @Override
     public Payment getPayment(String paymentId) {
-        // Implement logic to retrieve a payment by its ID
-        return null;
+        return paymentRepository.findById(paymentId);
     }
 
     @Override
     public List<Payment> getAllPayments() {
-        // Implement logic to retrieve all payments
-        return null;
+        return paymentRepository.findAll();
     }
 }
+

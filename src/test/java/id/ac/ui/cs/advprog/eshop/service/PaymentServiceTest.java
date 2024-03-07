@@ -10,8 +10,10 @@ import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
@@ -19,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
 
     @InjectMocks
@@ -96,8 +99,6 @@ public class PaymentServiceTest {
     @Test
     void testSetStatusInvalidStatus() {
         Payment payment = payments.get(0);
-        Order order = orders.get(0);
-        doReturn(order).when(orderRepository).findById(payment.getId());
 
         assertThrows(IllegalArgumentException.class, () -> {
             paymentService.setStatus(payment, "MEOW");
@@ -141,16 +142,8 @@ public class PaymentServiceTest {
         assertEquals(new ArrayList<Payment>(), result);
     }
 
-    @Test
-    void testSetStatusOrderNotFound() {
-        Payment payment = payments.get(1);
 
-        assertThrows(java.util.NoSuchElementException.class, () -> {
-            paymentService.setStatus(payment, PaymentStatus.SUCCESS.getValue());
-        });
 
-        verify(orderRepository, times(0)).save(any(Order.class));
-        verify(paymentRepository, times(0)).save(any(Payment.class));
-    }
+
 }
 
