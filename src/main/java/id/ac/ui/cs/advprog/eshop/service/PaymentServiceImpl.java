@@ -15,13 +15,10 @@ import java.util.Map;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
-
-    // Constructor
     public PaymentServiceImpl(PaymentRepository paymentRepository, OrderRepository orderRepository) {
         this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
@@ -37,16 +34,20 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment setStatus(Payment payment, String status) {
         payment.setStatus(status);
-        if (status.equals(PaymentStatus.SUCCESS.getValue())) {
-            Order order = orderRepository.findById(payment.getId());
-            order.setStatus(OrderStatus.SUCCESS.getValue());
-            orderRepository.save(order);
-        } else if (status.equals(PaymentStatus.REJECTED.getValue())) {
-            Order order = orderRepository.findById(payment.getId());
-            order.setStatus(OrderStatus.FAILED.getValue());
+        updateOrderStatus(payment, status);
+        return paymentRepository.save(payment);
+    }
+
+    private void updateOrderStatus(Payment payment, String status) {
+        Order order = orderRepository.findById(payment.getId());
+        if (order != null) {
+            if (PaymentStatus.SUCCESS.getValue().equals(status)) {
+                order.setStatus(OrderStatus.SUCCESS.getValue());
+            } else if (PaymentStatus.REJECTED.getValue().equals(status)) {
+                order.setStatus(OrderStatus.FAILED.getValue());
+            }
             orderRepository.save(order);
         }
-        return paymentRepository.save(payment);
     }
 
     @Override
@@ -59,4 +60,3 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll();
     }
 }
-
