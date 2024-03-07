@@ -1,6 +1,8 @@
+
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
@@ -26,6 +28,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
+        if (method.equals(PaymentMethod.CASH_ON_DELIVERY.getValue())) {
+            // For Cash On Delivery, validate and set address and delivery fee
+            if (!paymentData.containsKey("address") || paymentData.get("address").isEmpty() ||
+                    !paymentData.containsKey("deliveryFee") || paymentData.get("deliveryFee").isEmpty()) {
+                throw new IllegalArgumentException("Address and delivery fee are required for Cash On Delivery");
+            }
+            // Automatically set status to REJECTED if address or delivery fee is missing
+            paymentData.putIfAbsent("status", PaymentStatus.REJECTED.getValue());
+        }
+
         Payment payment = new Payment(order.getId(), method, paymentData);
         paymentRepository.save(payment);
         return payment;

@@ -142,8 +142,53 @@ public class PaymentServiceTest {
         assertEquals(new ArrayList<Payment>(), result);
     }
 
+    @Test
+    void testAddPaymentCashOnDelivery() {
+        Order order = orders.get(0);
+        Payment payment = payments.get(1);
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
+
+        Map<String, String> tempPaymentData = new HashMap<>() {
+            {
+                put("address", "Jalan Pondok Sofura");
+                put("deliveryFee", "25000");
+            }
+        };
+        Payment result = paymentService.addPayment(order, PaymentMethod.CASH_ON_DELIVERY.getValue(), tempPaymentData);
+        verify(paymentRepository, times(1)).save(any(Payment.class));
+        assertEquals(payment.getId(), result.getId());
+        assertEquals("Jalan Pondok Sofura", result.getPaymentData().get("address"));
+        assertEquals("25000", result.getPaymentData().get("deliveryFee"));
+    }
+
+    @Test
+    void testAddPaymentCashOnDeliveryEmptyAddress() {
+        Order order = orders.get(0);
+        Map<String, String> tempPaymentData = new HashMap<>() {
+            {
+                put("address", ""); // Empty address
+                put("deliveryFee", "25000");
+            }
+        };
+        assertThrows(IllegalArgumentException.class, () -> {
+            paymentService.addPayment(order, PaymentMethod.CASH_ON_DELIVERY.getValue(), tempPaymentData);
+        });
+    }
 
 
 
+
+    @Test
+    void testAddPaymentCashOnDeliveryEmptyDeliveryFee() {
+        Order order = orders.get(0);
+        Map<String, String> tempPaymentData = new HashMap<>() {
+            {
+                put("address", "Jalan Pondok Sofura");
+                put("deliveryFee", ""); // Empty delivery fee
+            }
+        };
+        assertThrows(IllegalArgumentException.class, () -> {
+            paymentService.addPayment(order, PaymentMethod.CASH_ON_DELIVERY.getValue(), tempPaymentData);
+        });
+    }
 }
-
